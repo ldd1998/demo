@@ -1,11 +1,9 @@
 server:
   port: 8081
-
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://192.168.193.101:3306/demos?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
-    #&rewriteBatched-Statements=true&useServerPrepStmts=false
 #    url: jdbc:mysql://124.223.29.146:3306/demos?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
     username: root
     password: liu15853087850
@@ -16,6 +14,6 @@ spring:
     password: liu15853087850
   mvc:
     pathmatch:
-      matching-strategy: ant_path_matcher
+      matching-strategy: ant_path_matcher #SpringBoot更新至2.6.0，swagger就引发了这个bug，加上这个配置来解决
 mybatis-plus:
   mapper-locations: classpath:**/*.xml
