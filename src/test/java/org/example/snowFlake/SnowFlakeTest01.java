@@ -1,4 +1,4 @@
-package org.example;
+package org.example.snowFlake;
 
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.IdUtil;

@@ -1,4 +1,4 @@
-package org.example.service;
+package org.example.service.insertMysqlService;
 
 import org.example.entity.User;
 import org.example.mapper.UserMapper;

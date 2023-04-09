@@ -1,15 +1,16 @@
-package org.example;
+package org.example.mock;
 
-import org.example.service.MockService01;
-import org.example.service.MockService02;
+import org.example.service.mock.MockService01;
+import org.example.service.mock.MockService02;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+/**
+ * 测试如果mock bean对象并让spring管理起来
+ */
 @SpringBootTest
 public class MockTest {
     @Autowired
