@@ -1,6 +1,5 @@
 package org.example.service.mock;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -10,9 +9,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class MockService02 {
     public String doOther(){
-        return "other";
+        return "MockService02-doOther";
     }
     public String doOther1(){
-        return "other1";
+        return "MockService02-doOther1";
     }
 }
