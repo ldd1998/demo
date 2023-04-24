@@ -40,7 +40,7 @@ enum OrderStatus {
     }
     public static String getDesByCode(int code){
         for (OrderStatus value : OrderStatus.values()) {
-            if(value.getCode() == value.getCode()){
+            if(value.getCode() == code){
                 return value.description;
             }
         }
