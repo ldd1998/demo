@@ -1,8 +1,11 @@
 package org.example.entity;
 
+import lombok.Data;
+
 /**
  * @author ldd
  */
+@Data
 public class User {
 //    @TableId(value = "id",type = IdType.AUTO)
     private String id;
