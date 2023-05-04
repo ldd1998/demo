@@ -2,9 +2,8 @@ package org.example.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.example.entity.User;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import org.example.entity.User;
 
 import java.util.List;
 
@@ -13,5 +12,10 @@ import java.util.List;
  */
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
-    List<User> selectUserByPage(IPage iPage);
+    /**
+     * mybatis分页查询
+     * @param iPage IPage对象
+     * @return IPage
+     */
+    List<User> selectUserByPage(IPage<User> iPage);
 }
