@@ -21,5 +21,14 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher #SpringBoot更新至2.6.0，swagger就引发了这个bug，加上这个配置来解决
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
 mybatis-plus:
-  mapper-locations: classpath:**/*.xml
+  mapper-locations: classpath:**/mapper/*.xml
+
