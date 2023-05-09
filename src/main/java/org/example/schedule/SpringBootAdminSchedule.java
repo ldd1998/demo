@@ -12,8 +12,14 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class SpringBootAdminSchedule {
     static int i = 0;
-    @Scheduled(cron = "* * * * * ?")
+    @Scheduled(cron = "0/10 * * * * ?")
     public void run(){
-        log.info("SpringBootAdminSchedule-执行次数："+i++);
+        try {
+            log.info("SpringBootAdminSchedule-执行开始，休眠：12秒");
+            Thread.sleep(12000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        log.info("SpringBootAdminSchedule-执行结束，次数："+i++);
     }
 }
