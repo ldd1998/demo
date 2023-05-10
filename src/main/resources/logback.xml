@@ -10,9 +10,9 @@
         </layout>
     </appender>
 
-    <property name="LOG_PATH" value="WebLogs" />
+    <property name="LOG_PATH" value="logs" />
     <!--设置系统日志目录-->
-    <property name="APPDIR" value="signalDeal" />
+    <property name="APPDIR" value="demo" />
     <!--日志最大的历史-->
     <property name="MAXHISTORY" value="30" />
 
