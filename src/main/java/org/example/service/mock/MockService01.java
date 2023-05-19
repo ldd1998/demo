@@ -17,4 +17,7 @@ public class MockService01 {
     public void doSomeThing1(){
         System.out.println(mockService02.doOther1());
     }
+    public void printCurrentTimeMillis(){
+        System.out.println(System.currentTimeMillis());
+    }
 }
