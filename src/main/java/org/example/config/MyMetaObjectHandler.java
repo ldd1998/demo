@@ -2,15 +2,14 @@ package org.example.config;
 
 import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import javafx.print.Collation;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
 import java.util.Date;
 
 /**
  * 自动增加创建时间更新时间
+ * 配合@TableField(fill = FieldFill.INSERT)使用
  * @author ldd
  */
 @Component
