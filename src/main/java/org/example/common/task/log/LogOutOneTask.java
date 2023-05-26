@@ -1,4 +1,4 @@
-package org.example.service.log;
+package org.example.common.task.log;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class LogOutOneService {
+public class LogOutOneTask {
     static int i = 0;
     @Scheduled(fixedDelay = 1000L)
     void printLogTest(){
