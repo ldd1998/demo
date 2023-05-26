@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class JdbcTest {
+public class JdbcConnectDbTest {
     /**
      * 使用jdbctemplate的方式手动连接数据库
      */

@@ -41,7 +41,10 @@ public class CommonService {
                     TransactionStatus transaction = dataSourceTransactionManager.getTransaction(df);
                     for (int i = 0; i < 1000; i++) {
                         String simpleUUID = IdUtil.simpleUUID();
-                        User user = new User(simpleUUID,"ldd",20,"","");
+                        User user = new User();
+                        user.setId(simpleUUID);
+                        user.setName("ldd");
+                        user.setAge(20);
                         userMapper.insert(user);
                     }
                     dataSourceTransactionManager.commit(transaction);
@@ -66,7 +69,10 @@ public class CommonService {
         long start = System.currentTimeMillis();
         for (int i = 0; i < 100000; i++) {
             String simpleUUID = IdUtil.simpleUUID();
-            User user = new User(simpleUUID,"ldd",20,"","");
+            User user = new User();
+            user.setId(simpleUUID);
+            user.setName("ldd");
+            user.setAge(20);
             userMapper.insert(user);
         }
         long end = System.currentTimeMillis();
@@ -76,7 +82,7 @@ public class CommonService {
     public void jdbcInsert() {
         long start = System.currentTimeMillis();
         for (int i = 0; i < 10000; i++) {
-            jdbcTemplate.execute("INSERT INTO `USER` (`id`, `name`, `age`, `create_time`, `update_time`) VALUES" +
+            jdbcTemplate.execute("INSERT INTO `user` ('id', 'name', 'age', 'create_time', 'update_time') VALUES" +
                     " ('0000507d42e042bca735943016fa2750', 'ldd', 20, '2023-02-14 19:41:18', '2023-02-14 19:41:18');");
         }
         long end = System.currentTimeMillis();
@@ -92,7 +98,7 @@ public class CommonService {
                 @Override
                 public void run() {
                     for (int i = 0; i < 10000; i++) {
-                        jdbcTemplate.execute("INSERT INTO `USER` (`id`, `name`, `age`, `create_time`, `update_time`) VALUES" +
+                        jdbcTemplate.execute("INSERT INTO `user` ('id', 'name', 'age', 'create_time', 'update_time') VALUES" +
                                 " ('0000507d42e042bca735943016fa2750', 'ldd', 20, '2023-02-14 19:41:18', '2023-02-14 19:41:18');");
                     }
                 }
@@ -123,7 +129,7 @@ public class CommonService {
                     df.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
                     TransactionStatus transaction = dataSourceTransactionManager.getTransaction(df);
                     for (int i = 0; i < 10000; i++) {
-                        jdbcTemplate.execute("INSERT INTO `USER` (`id`, `name`, `age`, `create_time`, `update_time`) VALUES" +
+                        jdbcTemplate.execute("INSERT INTO 'user' ('id', 'name', 'age', 'create_time', 'update_time') VALUES" +
                                 " ('0000507d42e042bca735943016fa2750', 'ldd', 20, '2023-02-14 19:41:18', '2023-02-14 19:41:18');");
                     }
                     dataSourceTransactionManager.commit(transaction);
@@ -153,7 +159,7 @@ public class CommonService {
                     DefaultTransactionDefinition df = new DefaultTransactionDefinition();
                     df.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
                     TransactionStatus transaction = dataSourceTransactionManager.getTransaction(df);
-                    jdbcTemplate.batchUpdate("INSERT INTO `USER` (`id`, `name`, `age`, `create_time`, `update_time`) VALUES" +
+                    jdbcTemplate.batchUpdate("INSERT INTO 'user' ('id', 'name', 'age', 'create_time', 'update_time') VALUES" +
                             " (?, ?, ?, ?, ?);",new BatchPreparedStatementSetter() {
                         @Override
                         public void setValues(PreparedStatement ps, int i) throws SQLException {
