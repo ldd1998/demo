@@ -128,7 +128,7 @@ public class InsertSpeedService {
                         }
                     });
                     dataSourceTransactionManager.commit(transactionStatus);//提交
-                    // 这里顺寻不能变，countDownLatch一定要在最后，否则就会未提交就继续执行了
+                    // 这里顺序不能变，countDownLatch一定要在最后，否则就会未提交就继续执行了
                     countDownLatch.countDown();
                 }
             };
