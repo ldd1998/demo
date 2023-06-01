@@ -1,16 +1,22 @@
 package org.example.check;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.File;
 import java.io.IOException;
+import java.net.JarURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 /**
  * 查找并返回指定包内的所有的类
  * @author ldd
  */
+@Slf4j
 public class ClassFinder {
     public static List<Class<?>> getClassesInPackage(String packageName) throws ClassNotFoundException, IOException {
         List<Class<?>> classes = new ArrayList<>();
@@ -27,12 +33,27 @@ public class ClassFinder {
                 String path = resource.getPath();
                 addClassesInPath(packageName, path, classes);
             } else if (protocol.equals("jar")) {
-                // 处理jar文件中的类
-                // 你可以根据需要添加对jar文件中类的处理逻辑
+                addClassesInJar(packagePath,resource,classes);
             }
         }
-
         return classes;
+    }
+
+    private static void addClassesInJar(String packagePath, URL resource, List<Class<?>> classes) throws IOException, ClassNotFoundException {
+        JarURLConnection jarURLConnection = (JarURLConnection) resource.openConnection();
+        JarFile jarFile = jarURLConnection.getJarFile();
+        Enumeration<JarEntry> entries = jarFile.entries();
+
+        while (entries.hasMoreElements()) {
+            JarEntry entry = entries.nextElement();
+            String entryName = entry.getName();
+
+            if (entryName.endsWith(".class") && entryName.startsWith(packagePath)) {
+                String className = entryName.replace('/', '.').substring(0, entryName.length() - 6);
+                Class<?> clazz = Class.forName(className);
+                classes.add(clazz);
+            }
+        }
     }
 
     private static void addClassesInPath(String packageName, String path, List<Class<?>> classes) throws ClassNotFoundException {

@@ -17,5 +17,8 @@ public class User {
     private String createTime;
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private String updateTime;
+    @TableField(exist = false)
     private String nameTest;
+    private String nameTest1;
+
 }

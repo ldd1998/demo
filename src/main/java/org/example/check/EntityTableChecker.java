@@ -1,6 +1,7 @@
 package org.example.check;
 
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,10 +14,7 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 检查实体类和表结构是否一致，支持DM和MySQl
@@ -44,22 +42,33 @@ public class EntityTableChecker {
                 continue;
             }
 
+            // 对@TableField(exist = false)的字段进行过滤
             Field[] fields = entityClass.getDeclaredFields();
-            for (Field field : fields) {
+            List<Field> fieldList = new ArrayList<>(Arrays.asList(fields));
+            for (int i = fieldList.size() - 1; i >= 0; i--) {
+                Field field = fieldList.get(i);
+                TableField fieldAnnotation = field.getAnnotation(TableField.class);
+                if (fieldAnnotation != null && fieldAnnotation.exist() == false) {
+                    log.info("表："+tableName+"的字段："+field.getName()+" 不计入判断");
+                    fieldList.remove(i);
+                }
+            }
+
+            for (Field field : fieldList) {
                 String fieldName = field.getName();
                 if (!columns.contains(StrUtil.toUnderlineCase(fieldName).toLowerCase())) {
-                    log.warn("实体类："+entityClass.getSimpleName()+" 缺失字段："+fieldName);
+                    log.error("表："+tableName+" 缺失字段："+fieldName);
                 }
             }
 
             List<String> fieldNames = new ArrayList<>();
-            for (Field field : fields) {
+            for (Field field : fieldList) {
                 String fieldName = field.getName();
                 fieldNames.add(StrUtil.toUnderlineCase(fieldName).toLowerCase());
             }
             for (String column : columns) {
                 if(!fieldNames.contains(column)){
-                    log.warn("表："+tableName+" 缺失字段："+column);
+                    log.warn("实体类："+entityClass.getSimpleName()+" 缺失字段："+column);
                 }
             }
         }
@@ -123,14 +132,21 @@ public class EntityTableChecker {
      * @throws IOException
      * @throws ClassNotFoundException
      */
+    Map<String,Class<?>> classMap = new HashMap<>();
     public Class<?> getEntityClass(String tableName) throws IOException, ClassNotFoundException {
         List<Class<?>> classes = ClassFinder.getClassesInPackage("org.example.entity");
-        Map<String,Class<?>> classMap = new HashMap<>();
+        if(classMap.keySet().size() == 0){
+            classMap = classesToMap(classes);
+        }
+        return classMap.get(tableName.toLowerCase());
+    }
+
+    private Map<String, Class<?>> classesToMap(List<Class<?>> classes) {
         for (int i = 0; i < classes.size(); i++) {
             String simpleClassName = classes.get(i).getSimpleName();
             String lowerCaseClassName = StrUtil.toUnderlineCase(simpleClassName).toLowerCase();
             classMap.put(lowerCaseClassName,classes.get(i));
         }
-        return classMap.get(tableName.toLowerCase());
+        return classMap;
     }
 }
