@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
+/**
+ * 查找并返回指定包内的所有的类
+ * @author ldd
+ */
 public class ClassFinder {
     public static List<Class<?>> getClassesInPackage(String packageName) throws ClassNotFoundException, IOException {
         List<Class<?>> classes = new ArrayList<>();
