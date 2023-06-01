@@ -18,6 +18,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 检查实体类和表结构是否一致，支持DM和MySQl
+ * @author ldd
+ */
 @Component
 @Slf4j
 public class EntityTableChecker {
