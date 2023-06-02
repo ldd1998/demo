@@ -31,7 +31,7 @@ public class MonitorFunctionAop {
         int countChange = endCount - startCount;
         log.info(point.getTarget().getClass().getSimpleName()+"：耗时：" + spendTime + "秒，更新数据量：" + countChange +"，速率：" + (int)(countChange/spendTime) + "/秒");
         log.info("清除user表。。。");
-        userMapper.delete(new QueryWrapper<>());
+//        userMapper.delete(new QueryWrapper<>());
         return obj;
     }
 }
