@@ -1,6 +1,8 @@
 package org.example.insertSpeed;
 
+import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.RandomUtil;
 import org.example.DemoApplicationForTest;
 import org.example.entity.User;
 import org.example.mapper.UserMapper;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -99,6 +102,11 @@ public class InsertSpeedTest {
     public void jdbcInsertThreadTrans() throws InterruptedException {
         List<User> users = new ArrayList<>();
         for (int i = 0; i < count/threadCount; i++) {
+            user = new User();
+            user.setName("ldd"+ RandomUtil.randomInt(0,100));
+            user.setAge(RandomUtil.randomInt(0,100));
+            user.setCreateTime(RandomUtil.randomDate(new Date(), DateField.SECOND,0,10000000).toString());
+            user.setUpdateTime(RandomUtil.randomDate(new Date(), DateField.SECOND,0,10000000).toString());
             users.add(user);
         }
         insertSpeedService.jdbcInsertThreadTrans(threadCount,users);
