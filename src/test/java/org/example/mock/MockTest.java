@@ -1,5 +1,6 @@
 package org.example.mock;
 
+import org.example.DemoApplicationForTest;
 import org.example.service.mock.MockService01;
 import org.example.service.mock.MockService02;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,7 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 /**
  * 测试如果mock bean对象并让spring管理起来
  */
-@SpringBootTest
+@SpringBootTest(classes = DemoApplicationForTest.class,webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class MockTest {
     @Autowired
     MockService01 mockService01;
@@ -58,5 +59,13 @@ public class MockTest {
     public void mockDoReturnWhenTest(){
         Mockito.doReturn("mock success").when(mockService02SpyBean).doOther();
         mockService01.doSomeThing();// 输出mock success，证明mock成功
+    }
+    /**
+     * 测试某个方法不通过service直接调用而是service内方法部调用是正常的呀？
+     *
+     */
+    @Test
+    public void test01(){
+        mockService01.doInnerFun();
     }
 }

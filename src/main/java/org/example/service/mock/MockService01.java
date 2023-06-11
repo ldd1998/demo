@@ -20,4 +20,13 @@ public class MockService01 {
     public void printCurrentTimeMillis(){
         System.out.println(System.currentTimeMillis());
     }
+
+    public void doInnerFun() {
+        innerFun();
+    }
+
+    private void innerFun() {
+        System.out.println("innerFun do ...");
+    }
+
 }
