@@ -1,13 +1,14 @@
 package org.example.service.thread;
 
 
+import org.example.DemoApplicationForTest;
 import org.example.util.SelfTransactionManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-@SpringBootTest
+@SpringBootTest(classes = DemoApplicationForTest.class,webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @Transactional
 public class ThreadSyncTestServiceTest {
     @Autowired
