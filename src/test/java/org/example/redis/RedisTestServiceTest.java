@@ -1,0 +1,32 @@
+package org.example.redis;
+
+import org.example.DemoApplicationForTest;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+@SpringBootTest(classes = DemoApplicationForTest.class,webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+public class RedisTestServiceTest {
+    @Autowired
+    RedisTestService redisTestService;
+
+    /**
+     * 测试redis的插入速度
+     * 约50000/s
+     * 感觉也不是很快的样子
+     */
+    @Test
+    public void test01(){
+        redisTestService.redisInsert(100,20);
+    }
+
+    /**
+     * 读取20W需要5秒
+     * 40000/s
+     * 感觉也不是很快
+     */
+
+    @Test
+    public void redisGetForValue() {
+        redisTestService.redisGetForValue(10000,20);
+    }
+}

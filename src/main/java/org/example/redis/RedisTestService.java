@@ -42,4 +42,28 @@ public class RedisTestService {
             throw new RuntimeException(e);
         }
     }
+    public void redisGetForValue(int count,int threadCount){
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(threadCount,threadCount,1000L, TimeUnit.SECONDS,new LinkedBlockingDeque<>());
+        CountDownLatch countDownLatch = new CountDownLatch(threadCount);
+        for (int j = 0; j < threadCount; j++) {
+            int jj = j;
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for (int i = count * jj; i < count * (jj + 1); i++) {
+                        String key = "test:" + i;
+                        String s = String.valueOf(redisTemplate.boundValueOps(key).get());
+                        System.out.println(s);
+                    }
+                    countDownLatch.countDown();
+                }
+            });
+            threadPoolExecutor.execute(thread);
+        }
+        try {
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
