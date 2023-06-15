@@ -20,8 +20,8 @@ public class RedisTestServiceTest {
     }
 
     /**
-     * 读取20W需要5秒
-     * 40000/s
+     * 读取20W需要4秒
+     * 50000/s
      * 感觉也不是很快
      */
 
