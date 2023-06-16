@@ -18,6 +18,11 @@ public class RedisTestService {
     @Autowired
     private RedisTemplate redisTemplate;
 
+    /**
+     *  测试redis的插入性能
+     * @param count
+     * @param threadCount
+     */
     public void redisInsert(int count,int threadCount){
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(threadCount,threadCount,1000L, TimeUnit.SECONDS,new LinkedBlockingDeque<>());
         CountDownLatch countDownLatch = new CountDownLatch(threadCount);
@@ -42,6 +47,12 @@ public class RedisTestService {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * 测试redis的获取性能
+     * @param count
+     * @param threadCount
+     */
     public void redisGetForValue(int count,int threadCount){
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(threadCount,threadCount,1000L, TimeUnit.SECONDS,new LinkedBlockingDeque<>());
         CountDownLatch countDownLatch = new CountDownLatch(threadCount);
