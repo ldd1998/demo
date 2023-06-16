@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
  * @author ldd
  */
 @Service
-public class RedisTestService {
+public class RedisSpeedTestService {
     @Autowired
     private RedisTemplate redisTemplate;
 

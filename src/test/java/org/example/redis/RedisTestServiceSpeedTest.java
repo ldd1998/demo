@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest(classes = DemoApplicationForTest.class,webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class RedisTestServiceTest {
+public class RedisTestServiceSpeedTest {
     @Autowired
-    RedisTestService redisTestService;
+    RedisSpeedTestService redisSpeedTestService;
 
     /**
      * 测试redis的插入速度
@@ -16,7 +16,7 @@ public class RedisTestServiceTest {
      */
     @Test
     public void test01(){
-        redisTestService.redisInsert(100,20);
+        redisSpeedTestService.redisInsert(100,20);
     }
 
     /**
@@ -27,6 +27,6 @@ public class RedisTestServiceTest {
 
     @Test
     public void redisGetForValue() {
-        redisTestService.redisGetForValue(10000,20);
+        redisSpeedTestService.redisGetForValue(10000,20);
     }
 }
