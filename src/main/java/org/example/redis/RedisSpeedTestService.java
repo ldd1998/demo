@@ -28,18 +28,17 @@ public class RedisSpeedTestService {
         CountDownLatch countDownLatch = new CountDownLatch(threadCount);
         for (int j = 0; j < threadCount; j++) {
             int jj = j;
-            Thread thread = new Thread(new Runnable() {
+            threadPoolExecutor.execute(new Runnable() {
                 @Override
                 public void run() {
                     for (int i = count * jj; i < count * (jj + 1); i++) {
                         String key = "test:" + i;
-                        redisTemplate.boundValueOps(key).set(i);
+                        redisTemplate.opsForValue().set(key,i+"");
 
                     }
                     countDownLatch.countDown();
                 }
             });
-            threadPoolExecutor.execute(thread);
         }
         try {
             countDownLatch.await();
