@@ -40,3 +40,15 @@ mybatis-plus:
   #configuration:
     #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
+xxl:
+  job:
+    admin:
+      addresses: http://127.0.0.1:8080/xxl-job-admin
+    accessToken: default_token
+    executor:
+      appname: xxlJobDemo
+      address :
+      ip:
+      port: 9999
+      logpath:
+      logretentiondays: 30
