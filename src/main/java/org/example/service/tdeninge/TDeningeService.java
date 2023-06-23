@@ -15,15 +15,24 @@ import java.util.List;
  * TDeninge restful连接测试
  */
 @Service
+@DS("td")
 public class TDeningeService {
     @Autowired
     StbMapper stbMapper;
-    @DS("td")
     public void stbMapperSelectList(){
         List<Stb> stbs = stbMapper.selectList(new QueryWrapper<>());
         System.out.println(stbs);
     }
-
+    public void stbMapperInsert(int count){
+        for (int i = 0; i < count; i++) {
+            String tableName = "tb1";
+            stbMapper.insertByTable(new Stb(),tableName);
+        }
+    }
+    public void stbMapperSelect(){
+        String tableName = "tb1";
+        stbMapper.selectByTable();
+    }
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         Class.forName("com.taosdata.jdbc.rs.RestfulDriver");
         String jdbcUrl = "jdbc:TAOS-RS://192.168.1.107:6041/test?user=root&password=taosdata";

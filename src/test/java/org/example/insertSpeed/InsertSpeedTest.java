@@ -38,7 +38,7 @@ public class InsertSpeedTest {
         user.setCreateTime(DateUtil.now());
     }
     // 插入数据条数
-    int count = 100000;
+    int count = 100;
     // 在多线程的情况下的线程数
     int threadCount = 10;
     @Autowired
