@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.example.entity.Stb;
 
+import java.util.List;
+
 /**
  * @author ldd
  */
@@ -12,5 +14,5 @@ import org.example.entity.Stb;
 public interface StbMapper extends BaseMapper<Stb> {
     void insertByTable(@Param("stb") Stb stb, @Param("tableName") String tableName);
 
-    void selectByTable();
+    List<Stb> selectByTable(@Param("tableName") String tableName);
 }

@@ -25,13 +25,14 @@ public class TDeningeService {
     }
     public void stbMapperInsert(int count){
         for (int i = 0; i < count; i++) {
-            String tableName = "tb1";
+            String tableName = "t1";
             stbMapper.insertByTable(new Stb(),tableName);
         }
     }
     public void stbMapperSelect(){
-        String tableName = "tb1";
-        stbMapper.selectByTable();
+        String tableName = "t1";
+        List<Stb> stbs = stbMapper.selectByTable(tableName);
+        System.out.println(stbs);
     }
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         Class.forName("com.taosdata.jdbc.rs.RestfulDriver");
