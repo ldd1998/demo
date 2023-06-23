@@ -1,6 +1,7 @@
 package org.example.redis;
 
 import org.example.config.RedisTestConfig;
+import org.example.service.redis.RedisSpeedTestService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
