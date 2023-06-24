@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.example.mapper.StbMapper">
     <insert id="insertByTable">
-        insert into stb values(now(),2)
+        insert into #{tableName} using stb tags(1,'tag2') values(now(),2)
     </insert>
     <select id="selectByTable" resultType="org.example.entity.Stb">
-        select *,t1,t2 from #{tableName};
+        select *,t1,t2 from #{tableName}
     </select>
 </mapper>
