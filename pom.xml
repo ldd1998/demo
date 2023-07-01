@@ -140,11 +140,19 @@
 <!--            <artifactId>elasticsearch-java</artifactId>-->
 <!--            <version>8.8.1</version>-->
 <!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.elasticsearch.client</groupId>-->
-<!--            <artifactId>elasticsearch-rest-high-level-client</artifactId>-->
-<!--            <version>7.17.4</version>-->
-<!--        </dependency>-->
+<!--        此依赖在8.x版本中被弃用,因此没有8.x版本,迁移到Java Low Level REST Clientedit-->
+<!--        https://www.elastic.co/guide/en/elasticsearch/client/java-api-client/current/index.html -->
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>elasticsearch-rest-high-level-client</artifactId>
+            <version>7.17.4</version>
+        </dependency>
+<!--        8.x使用这个新版依赖,此依赖中包含elasticsearch-java-->
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>elasticsearch-rest-client</artifactId>
+            <version>8.8.2</version>
+        </dependency>
         <!--POST /_license/start_trial?acknowledge=true 可以试用30天-->
         <dependency>
             <groupId>org.elasticsearch.plugin</groupId>
