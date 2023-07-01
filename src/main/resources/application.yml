@@ -10,6 +10,7 @@ spring:
         instance:
           service-base-url: http://localhost:${server.port}
   datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
     dynamic:
       primary: master #设置默认的数据源或者数据源组,默认值即为master
       strict: true #严格匹配数据源,默认false. true未匹配到指定数据源时抛异常,false使用默认数据源
@@ -21,14 +22,18 @@ spring:
           url: jdbc:mysql://192.168.1.107:3306/demos?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
           username: root
           password: liu15853087850
-        dm:
-          driver-class-name: dm.jdbc.driver.DmDriver
-          url: jdbc:dm://localhost:5236/DEMOS?useUnicode=true&amp;characterEncoding=UTF-8
-          username: DEMOS
-          password: DEMOS@123
+#        dm:
+#          driver-class-name: dm.jdbc.driver.DmDriver
+#          url: jdbc:dm://localhost:5236/DEMOS?useUnicode=true&amp;characterEncoding=UTF-8
+#          username: DEMOS
+#          password: DEMOS@123
         td:
           driver-class-name: com.taosdata.jdbc.rs.RestfulDriver
           url: jdbc:TAOS-RS://192.168.1.107:6041/test?user=root&password=taosdata
+        # x-pack
+        es:
+          driver-class-name: org.elasticsearch.xpack.sql.jdbc.EsDriver
+          url: jdbc:es://http://192.168.1.107:9200/?timezone=UTC&page.size=250
   redis:
     database: 0
     host: 192.168.1.107
@@ -37,6 +42,8 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher #SpringBoot更新至2.6.0，swagger就引发了这个bug，加上这个配置来解决
+  elasticsearch:
+    uris: 192.168.1.107
 # spring-boot-admin
 management:
   endpoints:
@@ -63,4 +70,3 @@ xxl:
       port: 9999
       logpath:
       logretentiondays: 30
-

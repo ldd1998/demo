@@ -22,13 +22,13 @@ public class MonitorFunctionAop {
 
     @Around("execution(* org.example.service.insertSpeed..*(..))")
     public Object monitorFunctionSpeed(ProceedingJoinPoint point) throws Throwable {
-        Integer startCount = userMapper.selectCount(new QueryWrapper<>());
+        Long startCount = userMapper.selectCount(new QueryWrapper<>());
         long startTime = System.currentTimeMillis();
         Object obj = point.proceed();
         long endTime = System.currentTimeMillis();
-        Integer endCount = userMapper.selectCount(new QueryWrapper<>());
+        Long endCount = userMapper.selectCount(new QueryWrapper<>());
         double spendTime = (double) (endTime - startTime) / 1000D;
-        int countChange = endCount - startCount;
+        Long countChange = endCount - startCount;
         log.info(point.getTarget().getClass().getSimpleName()+"：耗时：" + spendTime + "秒，更新数据量：" + countChange +"，速率：" + (int)(countChange/spendTime) + "/秒");
         log.info("清除user表。。。");
 //        userMapper.delete(new QueryWrapper<>());

@@ -14,11 +14,11 @@ import org.springframework.stereotype.Service;
 public class MonitorDbTask {
     @Autowired
     UserMapper userMapper;
-    Integer lastCount = 0;
+    long lastCount = 0;
 //    @Scheduled(fixedDelay = 1000)
     void monitorDbChangeSpeed(){
-        Integer count = userMapper.selectCount(new QueryWrapper<>());
-        int changePerSec = count - lastCount;
+        Long count = userMapper.selectCount(new QueryWrapper<>());
+        Long changePerSec = count - lastCount;
         lastCount = count;
         System.out.println("数据变化" + changePerSec+"/秒" + "当前数据：" +count);
     }

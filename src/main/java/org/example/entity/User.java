@@ -7,7 +7,7 @@ import lombok.Data;
  * @author ldd
  */
 @Data
-@TableName(value = "USER")
+@TableName(value = "user")
 public class User {
     @TableId(value = "id",type = IdType.AUTO)
     private String id;
