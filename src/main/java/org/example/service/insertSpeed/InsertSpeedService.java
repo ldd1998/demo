@@ -118,8 +118,8 @@ public class InsertSpeedService {
                             ps.setString(1, users.get(i).getId());
                             ps.setString(2, users.get(i).getName());
                             ps.setInt(3, users.get(i).getAge());
-                            ps.setString(4, users.get(i).getCreateTime());
-                            ps.setString(5, users.get(i).getUpdateTime());
+                            ps.setString(4, users.get(i).getCreateTime().toString());
+                            ps.setString(5, users.get(i).getUpdateTime().toString());
                         }
 
                         @Override

@@ -1,7 +1,5 @@
 package org.example.insertSpeed;
 
-import cn.hutool.core.date.DateField;
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.RandomUtil;
 import org.example.DemoApplicationForTest;
 import org.example.entity.User;
@@ -12,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,8 +31,8 @@ public class InsertSpeedTest {
         // 创建用户对象
         user.setName("ldd");
         user.setAge(20);
-        user.setUpdateTime(DateUtil.now());
-        user.setCreateTime(DateUtil.now());
+//        user.setUpdateTime(LocalDateTimeUtil.now());
+//        user.setCreateTime(LocalDateTimeUtil.now());
     }
     // 插入数据条数
     int count = 100;
@@ -105,8 +102,8 @@ public class InsertSpeedTest {
             user = new User();
             user.setName("ldd"+ RandomUtil.randomInt(0,100));
             user.setAge(RandomUtil.randomInt(0,100));
-            user.setCreateTime(RandomUtil.randomDate(new Date(), DateField.SECOND,0,10000000).toString());
-            user.setUpdateTime(RandomUtil.randomDate(new Date(), DateField.SECOND,0,10000000).toString());
+//            user.setCreateTime(RandomUtil.randomDate(new Date(), DateField.SECOND,0,10000000).toTimestamp().toLocalDateTime());
+//            user.setUpdateTime(RandomUtil.randomDate(new Date(), DateField.SECOND,0,10000000).toTimestamp().toLocalDateTime());
             users.add(user);
         }
         insertSpeedService.jdbcInsertThreadTrans(threadCount,users);

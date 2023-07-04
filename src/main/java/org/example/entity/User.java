@@ -3,6 +3,8 @@ package org.example.entity;
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 /**
  * @author ldd
  */
@@ -14,11 +16,10 @@ public class User {
     private String name;
     private int age;
     @TableField(fill = FieldFill.INSERT)
-    private String createTime;
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private String updateTime;
+    private LocalDateTime createTime;
+    private LocalDateTime updateTime;
     @TableField(exist = false)
     private String nameTest;
+    @TableField(exist = false)
     private String nameTest1;
-
 }

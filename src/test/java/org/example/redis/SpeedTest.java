@@ -1,4 +1,4 @@
-package org.example.speed;
+package org.example.redis;
 
 import cn.hutool.core.util.RandomUtil;
 import org.example.DemoApplicationForTest;
