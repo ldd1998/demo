@@ -2,6 +2,9 @@ package org.example.elasticsearch;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import lombok.SneakyThrows;
 import org.apache.http.HttpHost;
 import org.apache.http.util.EntityUtils;
 import org.elasticsearch.client.Request;
@@ -40,27 +43,25 @@ public class ElasticsearchService {
     }
 
     public void insertUserThread(int threadCount, int perCount) throws InterruptedException, IOException {
-        RestClient restClient = RestClient.builder(
-                new HttpHost("192.168.1.107", 9200, "http")).build();
+        RestClient restClient = RestClient.builder(new HttpHost("192.168.1.107", 9200, "http")).build();
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(20, 20, 1, TimeUnit.HOURS, new LinkedBlockingDeque<>());
         CountDownLatch countDownLatch = new CountDownLatch(perCount * threadCount);
         for (int i = 0; i < threadCount; i++) {
             for (int k = 0; k < perCount; k++) {
                 int a = i * perCount + k;
                 threadPoolExecutor.execute(new Runnable() {
+                    @SneakyThrows
                     @Override
                     public void run() {
-                        Request request = new Request(
-                                "POST",
-                                "/user/_doc/" + a);
-                        request.setJsonEntity("{\n" +
-                                "  \"id\":1,\n" +
-                                " \"name\":\"zhangsan\",\n" +
-                                " \"age\":30,\n" +
-                                " \"create_time\":\"2023-01-01\",\n" +
-                                " \"update_time\":\"2023-01-01\",\n" +
-                                " \"name_test1\":\"1\"\n" +
-                                "}");
+                        User user = new User();
+                        user.setAge(1);
+                        user.setName("ldd");
+                        ObjectMapper objectMapper = new ObjectMapper();
+                        objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+                        String userJson = objectMapper.writeValueAsString(user);
+
+                        Request request = new Request("POST", "/user/_doc/" + a);
+                        request.setJsonEntity(userJson);
                         Response response = null;
                         try {
                             response = restClient.performRequest(request);
