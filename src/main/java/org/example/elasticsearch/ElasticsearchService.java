@@ -104,7 +104,8 @@ public class ElasticsearchService {
                 @SneakyThrows
                 @Override
                 public void run() {
-                    Request request = new Request("POST", "/user/_bulk");
+                    // ?filter_path=/_bulk不需要返回状态，减少网络开销
+                    Request request = new Request("POST", "/user/_bulk?filter_path=/_bulk");
                     StringBuffer body = new StringBuffer();
                     for (int k = 0; k < perCount; k++) {
                         int a = i1 * perCount + k;

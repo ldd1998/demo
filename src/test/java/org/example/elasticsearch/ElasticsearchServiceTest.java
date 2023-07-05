@@ -176,13 +176,13 @@ public class ElasticsearchServiceTest {
     }
 
     /**
-     * 6秒20W条，网络达到了100Mbps/s，应该是达到了瓶颈
-     * 3W/s
+     * 5秒20W条，4W/s网络达到了100Mbps/s，应该是达到了瓶颈
+     * 部署到同一台机器上，6.6W/s，此时cpu达到了瓶颈
      * @throws IOException
      * @throws InterruptedException
      */
     @Test
     public void insertUserThreadBlukTest() throws IOException, InterruptedException {
-        elasticsearchService.insertUserThreadBluk(20,1000);
+        elasticsearchService.insertUserThreadBluk(200,2000);
     }
 }
