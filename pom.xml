@@ -109,11 +109,11 @@
             <version>3.12.4</version> <!-- 指定合适的版本号 -->
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>dm7</groupId>
-            <artifactId>dm7</artifactId>
-            <version>V7.1.5.65</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>dm7</groupId>-->
+<!--            <artifactId>dm7</artifactId>-->
+<!--            <version>V7.1.5.65</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
