@@ -174,4 +174,15 @@ public class ElasticsearchServiceTest {
     public void insertUserThreadTest() throws IOException, InterruptedException {
         elasticsearchService.insertUserThread(40,500);
     }
+
+    /**
+     * 6秒20W条，网络达到了100Mbps/s，应该是达到了瓶颈
+     * 3W/s
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    @Test
+    public void insertUserThreadBlukTest() throws IOException, InterruptedException {
+        elasticsearchService.insertUserThreadBluk(20,1000);
+    }
 }
