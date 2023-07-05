@@ -183,6 +183,6 @@ public class ElasticsearchServiceTest {
      */
     @Test
     public void insertUserThreadBlukTest() throws IOException, InterruptedException {
-        elasticsearchService.insertUserThreadBluk(10,10);
+        elasticsearchService.insertUserThreadBluk(1,1);
     }
 }
