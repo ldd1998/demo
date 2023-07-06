@@ -1,4 +1,4 @@
-package org.example.service.task.monitor;
+package org.example.service.task.monitor.db;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.example.mapper.UserMapper;
