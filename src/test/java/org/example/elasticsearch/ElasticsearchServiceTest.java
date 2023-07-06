@@ -77,7 +77,7 @@ public class ElasticsearchServiceTest {
 //        request.addParameter("name", "zhangsan2");
         // 设置body请求体
         request.setJsonEntity("{\n" +
-                "  \"query\": \"SELECT * FROM user WHERE age = 30\"\n" +
+                "  \"query\": \"SELECT * FROM user limit 1\"\n" +
                 "}");
         Response response = restClient.performRequest(request);
         RequestLine requestLine = response.getRequestLine();
@@ -85,6 +85,7 @@ public class ElasticsearchServiceTest {
         int statusCode = response.getStatusLine().getStatusCode();
         Header[] headers = response.getHeaders();
         String responseBody = EntityUtils.toString(response.getEntity());
+        System.out.println(responseBody);
         restClient.close();
     }
     /**
