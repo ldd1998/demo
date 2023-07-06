@@ -44,6 +44,8 @@ spring:
       matching-strategy: ant_path_matcher #SpringBoot更新至2.6.0，swagger就引发了这个bug，加上这个配置来解决
   elasticsearch:
     uris: 192.168.1.107
+  kafka:
+    bootstrap-servers: 192.168.1.107:9092
 # spring-boot-admin
 management:
   endpoints:

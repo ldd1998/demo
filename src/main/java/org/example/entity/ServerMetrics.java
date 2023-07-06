@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
+import org.example.config.MyDateTime;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -56,6 +58,7 @@ public class ServerMetrics implements Serializable {
     /**
      * 记录时间戳
      */
+    @JsonSerialize(using = MyDateTime.LocalDateTimeSerializer.class)
     @TableField(value = "create_time")
     private LocalDateTime createTime;
 }
