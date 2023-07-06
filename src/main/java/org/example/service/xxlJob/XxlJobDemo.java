@@ -1,4 +1,4 @@
-package org.example.xxlJob;
+package org.example.service.xxlJob;
 
 import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.handler.annotation.XxlJob;

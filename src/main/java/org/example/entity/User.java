@@ -22,8 +22,4 @@ public class User {
     private LocalDateTime createTime;
     @JsonSerialize(using = MyDateTime.LocalDateTimeSerializer.class)
     private LocalDateTime updateTime;
-    @TableField(exist = false)
-    private String nameTest;
-    @TableField(exist = false)
-    private String nameTest1;
 }

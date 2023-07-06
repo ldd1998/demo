@@ -1,4 +1,4 @@
-package org.example.elasticsearch;
+package org.example.service.elasticsearch;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;

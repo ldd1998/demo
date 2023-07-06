@@ -11,6 +11,7 @@ import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.*;
 import org.elasticsearch.xcontent.XContentType;
 import org.example.DemoApplicationForTest;
+import org.example.service.elasticsearch.ElasticsearchService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -186,4 +187,13 @@ public class ElasticsearchServiceTest {
     public void insertUserThreadBlukTest() throws IOException, InterruptedException {
         elasticsearchService.insertUserThreadBluk(1,1);
     }
+
+    /**
+     * 应用双写数据到MySQL和es，写入es基于mq的消费方式
+     */
+    @Test
+    public void writeMysqlAndEs(){
+
+    }
+
 }

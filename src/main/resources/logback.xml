@@ -215,11 +215,11 @@
     </appender>
 
     <!-- 定义功能模块one的Logger -->
-    <logger name="org.example.common.task.log.LogOutOneTask" level="info">
+    <logger name="org.example.service.task.log.LogOutOneTask" level="info">
         <appender-ref ref="fileLogOutOneInfo" /> <!-- 将功能模块1的日志输出到fileLogOutOneInfo Appender -->
     </logger>
     <!-- 定义功能模块one的Logger -->
-    <logger name="org.example.common.task.log.LogOutTwoTask" level="info">
+    <logger name="org.example.service.task.log.LogOutTwoTask" level="info">
         <appender-ref ref="fileLogOutTwoInfo" /> <!-- 将功能模块2的日志输出到fileLogOutTwoInfo Appender -->
     </logger>
 
