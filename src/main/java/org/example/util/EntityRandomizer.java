@@ -9,13 +9,24 @@ import java.util.Random;
 public class EntityRandomizer {
     private static final Random random = new Random();
 
-    public static <T> T getRandomizedEntity(Class<T> entityType) throws IllegalAccessException, InstantiationException {
-        T entity = entityType.newInstance();
+    public static <T> T getRandomizedEntity(Class<T> entityType) {
+        T entity = null;
+        try {
+            entity = entityType.newInstance();
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
 
         for (java.lang.reflect.Field field : entityType.getDeclaredFields()) {
             field.setAccessible(true);
             Object randomValue = getRandomValue(field.getType());
-            field.set(entity, randomValue);
+            try {
+                field.set(entity, randomValue);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         return entity;
