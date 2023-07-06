@@ -1,7 +1,6 @@
 package org.example.service.task.springBootAdmin;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class SpringBootAdminTask {
     static int i = 0;
-    @Scheduled(cron = "0/10 * * * * ?")
+//    @Scheduled(cron = "0/10 * * * * ?")
     public void run(){
         try {
             log.info("SpringBootAdminSchedule-执行开始，休眠：12秒");
