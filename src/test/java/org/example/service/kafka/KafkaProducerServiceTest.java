@@ -32,13 +32,13 @@ public class KafkaProducerServiceTest {
     }
 
     /**
-     * 多线程下
+     * 多线程下，部署本机，30w/s，cpu85%
      */
     @Test
     public void sendMessageThreadTest() throws InterruptedException {
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(20,20,1, TimeUnit.HOURS,new LinkedBlockingDeque<>());
         int threadCount = 1000;
-        int perCount = 100000;
+        int perCount = 10000;
         CountDownLatch countDownLatch = new CountDownLatch(threadCount);
         for (int i = 0; i < threadCount; i++) {
             threadPoolExecutor.execute(new Runnable() {

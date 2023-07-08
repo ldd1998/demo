@@ -1,5 +1,6 @@
 package org.example.service.elasticsearch;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,6 +8,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;
 import org.apache.http.util.EntityUtils;
 import org.elasticsearch.client.Request;
@@ -30,12 +32,14 @@ import java.util.concurrent.TimeUnit;
  * elasticsearch操作示例
  */
 @Service
+@Slf4j
 public class ElasticsearchService {
     @Autowired
     UserMapper userMapper;
-    @Autowired
-    RestClient restClient;
-
+    RestClient restClient = null;
+    ElasticsearchService(){
+        restClient = RestClient.builder(new HttpHost("192.168.1.107", 9200, "http")).build();
+    }
     /**
      * 执行sql，x-pack，收费，暂时放弃
      */
@@ -137,5 +141,16 @@ public class ElasticsearchService {
         }
         countDownLatch.await();
         restClient.close();
+    }
+    public void insertDataToEs(String name, String data){
+        JSONObject jsonObject = JSONObject.parseObject(data);
+        Request request = new Request("POST", "/"+name+"/_doc/" + jsonObject.get("id"));
+        request.setJsonEntity(data);
+        try {
+            Response response = restClient.performRequest(request);
+            log.info(EntityUtils.toString(response.getEntity()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
