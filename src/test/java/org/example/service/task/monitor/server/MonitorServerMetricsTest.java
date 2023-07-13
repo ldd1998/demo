@@ -2,6 +2,7 @@ package org.example.service.task.monitor.server;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.example.DemoApplicationForTest;
+import org.example.service.kafka.KafkaConsumerService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,6 +12,8 @@ public class MonitorServerMetricsTest {
 
     @Autowired
     MonitorServerMetrics monitorServerMetrics;
+    @Autowired
+    KafkaConsumerService kafkaConsumerService;
     @Test
     public void collectServerMetricsTest() throws JsonProcessingException {
         MonitorServerMetrics monitorServerMetrics = new MonitorServerMetrics();
@@ -18,6 +21,6 @@ public class MonitorServerMetricsTest {
     }
     @Test
     public void kafkaReceive(){
-        monitorServerMetrics.consumeMessage();
+        kafkaConsumerService.consumeMessage();
     }
 }

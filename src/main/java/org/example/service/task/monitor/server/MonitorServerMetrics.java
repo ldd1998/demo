@@ -2,18 +2,11 @@ package org.example.service.task.monitor.server;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.common.TopicPartition;
 import org.example.entity.ServerMetrics;
 import org.example.mapper.ServerMetricsMapper;
-import org.example.service.elasticsearch.ElasticsearchService;
 import org.example.service.kafka.KafkaProducerService;
 import org.example.util.ObjectMapperSnakeCaseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import oshi.SystemInfo;
@@ -24,9 +17,7 @@ import oshi.software.os.FileSystem;
 import oshi.software.os.OSFileStore;
 
 import java.math.BigDecimal;
-import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 
 /**
  * 定时监控服务器指标程序
@@ -77,43 +68,6 @@ public class MonitorServerMetrics {
         serverMetrics.setServerId("192.168.1.107");
         serverMetricsMapper.insert(serverMetrics);
         kafkaProducerService.sendMessage(topic, objectMapperSnakeCaseUtil.toJSONString(serverMetrics));
-        log.info("监控服务器指标："+serverMetrics);
-    }
-    /**
-     * 消费kafka消息，放到elastic
-     */
-
-    @Autowired
-    private KafkaTemplate<String, String> kafkaTemplate;
-    @KafkaListener(topics = "serverMetricsTopic", groupId = "serverMetricsGroup")
-    public void monitorToEsConsumer(ConsumerRecord<String, String> record) {
-//        log.info("接收服务器指标信息: " + record.value());
     }
 
-
-    @Autowired
-    private KafkaConsumer<String, String> consumer;
-    @Autowired
-    ElasticsearchService elasticsearchService;
-    public void consumeMessage() {
-        consumer.subscribe(Arrays.asList(topic));
-        while (true) {
-            consumer.poll(1000);
-            if (!consumer.assignment().isEmpty()) break;
-        }
-        consumer.seek(new TopicPartition(topic,0),0);
-        while (true) {
-            ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(1000));
-
-            for (ConsumerRecord<String, String> record : records) {
-                elasticsearchService.insertDataToEs("server_metrics",record.value());
-                System.out.printf("自定义接收服务器指标信息offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
-            }
-
-            // 执行你的逻辑...
-
-            // 手动提交偏移量
-//            consumer.commitSync();
-        }
-    }
 }

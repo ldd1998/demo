@@ -48,6 +48,11 @@ spring:
     bootstrap-servers: 192.168.1.107:9092
     consumer:
       group-id: myGroup
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    zookeeper:
+      connect: 192.168.1.107:2181
 # spring-boot-admin
 management:
   endpoints:
