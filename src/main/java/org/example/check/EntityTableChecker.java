@@ -2,6 +2,7 @@ package org.example.check;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -134,7 +135,7 @@ public class EntityTableChecker {
      */
     Map<String,Class<?>> classMap = new HashMap<>();
     public Class<?> getEntityClass(String tableName) throws IOException, ClassNotFoundException {
-        List<Class<?>> classes = ClassFinder.getClassesInPackage("org.example.entity");
+        List<Class<?>> classes = ClassFinderInProject.findClassesWithAnnotationInPackage("", TableName.class);;
         if(classMap.keySet().size() == 0){
             classMap = classesToMap(classes);
         }
