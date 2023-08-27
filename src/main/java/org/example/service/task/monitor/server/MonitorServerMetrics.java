@@ -39,7 +39,7 @@ public class MonitorServerMetrics {
         this.hardware = systemInfo.getHardware();
     }
 
-    @Scheduled(fixedRate = 1000)
+//    @Scheduled(fixedRate = 1000)
     public void collectServerMetrics() throws JsonProcessingException {
         oshi.hardware.CentralProcessor.TickType[] tickTypes = oshi.hardware.CentralProcessor.TickType.values();
         long[] oldTicks = new long[tickTypes.length];
