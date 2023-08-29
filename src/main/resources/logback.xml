@@ -76,8 +76,7 @@
             <fileNamePattern>${LOG_PATH}/${APP_DIR}/info/log_info_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <!--日志文件保留天数-->
             <MaxHistory>${MAX_HISTORY}</MaxHistory>
-            <!-- 除按日志记录之外，还配置了日志文件不能超过指定大小，若超过，日志文件会以索引0开始，
-            命名日志文件，例如log-error-2013-12-21.0.log -->
+            <!-- 除按日志记录之外，还配置了日志文件不能超过指定大小，若超过，日志文件会以索引0开始，命名日志文件，例如log-error-2013-12-21.0.log -->
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
