@@ -94,7 +94,6 @@ public class EntityTableChecker {
         return tables;
     }
 
-
     /**
      * 获取表字段
      * @param jdbcTemplate

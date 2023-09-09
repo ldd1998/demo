@@ -83,16 +83,16 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>de.codecentric</groupId>-->
-<!--            <artifactId>spring-boot-admin-starter-server</artifactId>-->
-<!--            <version>2.7.9</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>de.codecentric</groupId>-->
-<!--            <artifactId>spring-boot-admin-starter-client</artifactId>-->
-<!--            <version>2.7.9</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>de.codecentric</groupId>-->
+        <!--            <artifactId>spring-boot-admin-starter-server</artifactId>-->
+        <!--            <version>2.7.9</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>de.codecentric</groupId>-->
+        <!--            <artifactId>spring-boot-admin-starter-client</artifactId>-->
+        <!--            <version>2.7.9</version>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>org.powermock</groupId>
             <artifactId>powermock-module-junit4</artifactId>
@@ -109,11 +109,11 @@
             <version>3.12.4</version> <!-- 指定合适的版本号 -->
             <scope>test</scope>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>dm7</groupId>-->
-<!--            <artifactId>dm7</artifactId>-->
-<!--            <version>V7.1.5.65</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>dm7</groupId>-->
+        <!--            <artifactId>dm7</artifactId>-->
+        <!--            <version>V7.1.5.65</version>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
@@ -135,19 +135,19 @@
             <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
             <version>3.6.1</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>co.elastic.clients</groupId>-->
-<!--            <artifactId>elasticsearch-java</artifactId>-->
-<!--            <version>8.8.1</version>-->
-<!--        </dependency>-->
-<!--        此依赖在8.x版本中被弃用,因此没有8.x版本,迁移到Java Low Level REST Clientedit-->
-<!--        https://www.elastic.co/guide/en/elasticsearch/client/java-api-client/current/index.html -->
+        <!--        <dependency>-->
+        <!--            <groupId>co.elastic.clients</groupId>-->
+        <!--            <artifactId>elasticsearch-java</artifactId>-->
+        <!--            <version>8.8.1</version>-->
+        <!--        </dependency>-->
+        <!--        此依赖在8.x版本中被弃用,因此没有8.x版本,迁移到Java Low Level REST Clientedit-->
+        <!--        https://www.elastic.co/guide/en/elasticsearch/client/java-api-client/current/index.html -->
         <dependency>
             <groupId>org.elasticsearch.client</groupId>
             <artifactId>elasticsearch-rest-high-level-client</artifactId>
             <version>7.17.4</version>
         </dependency>
-<!--        8.x使用这个新版依赖,此依赖中包含elasticsearch-java-->
+        <!--        8.x使用这个新版依赖,此依赖中包含elasticsearch-java-->
         <dependency>
             <groupId>org.elasticsearch.client</groupId>
             <artifactId>elasticsearch-rest-client</artifactId>
@@ -160,13 +160,13 @@
             <version>7.17.10</version>
         </dependency>
         <!--druid依赖，解决x-pack-sql-jdbc报错read-only-->
-<!--        升级到1.1.21以上解决mybatis-plus不能映射LocalDateTime类型数据结构-->
+        <!--        升级到1.1.21以上解决mybatis-plus不能映射LocalDateTime类型数据结构-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
             <version>1.1.21</version>
         </dependency>
-<!--        主要使用其中的将驼峰转化为下划线json字符串-->
+        <!--        主要使用其中的将驼峰转化为下划线json字符串-->
         <!-- 替换为你所使用的Jackson版本，解决LocalDateTime的问题 -->
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
@@ -178,7 +178,7 @@
             <artifactId>oshi-core</artifactId>
             <version>5.8.1</version>
         </dependency>
-<!--        2.7.x及以前的版本是依赖zookeeper的-->
+        <!--        2.7.x及以前的版本是依赖zookeeper的-->
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
@@ -188,6 +188,12 @@
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-clients</artifactId>
             <version>2.8.0</version>
+        </dependency>
+        <!--因为过滤器中的 EvaluatorFilter 使用了 Janino 类库来执行表达式-->
+        <dependency>
+            <groupId>org.codehaus.janino</groupId>
+            <artifactId>janino</artifactId>
+            <version>3.1.7</version>
         </dependency>
     </dependencies>
 

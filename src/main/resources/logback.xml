@@ -2,13 +2,13 @@
 <configuration scan="true">
     <contextName>trans</contextName>
     <!--自定义属性，方便下面引用，设置系统日志路径-->
-    <property name="LOG_PATH" value="logs" />
+    <property name="LOG_PATH" value="logs"/>
     <!--自定义属性，方便下面引用，设置系统日志下级目录名称-->
-    <property name="APP_DIR" value="demo" />
+    <property name="APP_DIR" value="demo"/>
     <!--自定义属性，日志最大的历史-->
-    <property name="MAX_HISTORY" value="30" />
+    <property name="MAX_HISTORY" value="30"/>
     <!--自定义属性，日志文件最大大小-->
-    <property name="MAX_FILE_SIZE" value="200MB" />
+    <property name="MAX_FILE_SIZE" value="200MB"/>
     <!-- 日志输出格式-->
     <property name="PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %-40logger{40} : %msg%n"/>
     <!-- 输出info到控制台 -->
@@ -18,12 +18,23 @@
                 %blue(%d{yyyy-MM-dd HH:mm:ss.SSS}) %green(%-5level) %cyan(%-40logger{40} :) %msg%n
             </pattern>
         </layout>
+        <!-- 配置过滤器，排除org.example.service.task.log.LogOutOneTask类的日志 -->
+        <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+            <evaluator class="ch.qos.logback.classic.boolex.JaninoEventEvaluator">
+                <expression>logger.equals("org.example.service.task.log.LogOutOneTask")</expression>
+                <!--如果是排除包，可以用下面这句-->
+                <!--<expression>logger.contains("org.example.service.task.log")</expression>-->
+            </evaluator>
+            <OnMismatch>NEUTRAL</OnMismatch>
+            <OnMatch>DENY</OnMatch>
+        </filter>
         <!-- 此日志文件只记录info级别的 -->
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>info</level>
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
+
     </appender>
     <!-- 输出warn到控制台 -->
     <appender name="stdoutWarning" class="ch.qos.logback.core.ConsoleAppender">
@@ -65,8 +76,7 @@
             <fileNamePattern>${LOG_PATH}/${APP_DIR}/info/log_info_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <!--日志文件保留天数-->
             <MaxHistory>${MAX_HISTORY}</MaxHistory>
-            <!-- 除按日志记录之外，还配置了日志文件不能超过指定大小，若超过，日志文件会以索引0开始，
-            命名日志文件，例如log-error-2013-12-21.0.log -->
+            <!-- 除按日志记录之外，还配置了日志文件不能超过指定大小，若超过，日志文件会以索引0开始，命名日志文件，例如log-error-2013-12-21.0.log -->
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
@@ -214,13 +224,13 @@
         </filter>
     </appender>
 
-    <!-- 定义功能模块one的Logger -->
+    <!-- 定义功能模块One的Logger -->
     <logger name="org.example.service.task.log.LogOutOneTask" level="info">
-        <appender-ref ref="fileLogOutOneInfo" /> <!-- 将功能模块1的日志输出到fileLogOutOneInfo Appender -->
+        <appender-ref ref="fileLogOutOneInfo"/> <!-- 将功能模块1的日志输出到fileLogOutOneInfo Appender -->
     </logger>
-    <!-- 定义功能模块one的Logger -->
+    <!-- 定义功能模块Two的Logger -->
     <logger name="org.example.service.task.log.LogOutTwoTask" level="info">
-        <appender-ref ref="fileLogOutTwoInfo" /> <!-- 将功能模块2的日志输出到fileLogOutTwoInfo Appender -->
+        <appender-ref ref="fileLogOutTwoInfo"/> <!-- 将功能模块2的日志输出到fileLogOutTwoInfo Appender -->
     </logger>
 
     <root level="info">
