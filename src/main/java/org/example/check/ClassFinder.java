@@ -18,6 +18,7 @@ import java.util.jar.JarFile;
  */
 @Slf4j
 public class ClassFinder {
+
     public static List<Class<?>> getClassesInPackage(String packageName) throws ClassNotFoundException, IOException {
         List<Class<?>> classes = new ArrayList<>();
 
