@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class LogOutOneTask {
-
     static int i = 0;
 //    @Scheduled(fixedDelay = 1000L)
     void printLogTest(){
