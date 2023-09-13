@@ -1,12 +1,15 @@
 package org.example.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
 /**
- * 该类模拟nginx转发post请求问题
+ * 该类模拟nginx转发post请求问题// TODO
+ * 未完成完整模拟
  */
 @RestController("/post")
 public class NginxController {
@@ -35,9 +38,20 @@ public class NginxController {
     }
     /**
      * 带restfull参数请求的get请求
+     * 最终发现为ResponseEntity的问题
      */
-    @PostMapping("/post3/{uri}/**")
-    public String post3(@PathVariable String uri, @RequestBody Map<String,String> body){
-        return "请求成功:"+uri+",body:"+ JSONObject.toJSONString(body);
+    @PostMapping("{uri}/**")
+    public ResponseEntity post3(@PathVariable String uri, @RequestBody Map<String,String> body){
+        ResponseEntity<String> forEntity = new ResponseEntity(HttpStatus.OK);
+        return forEntity;
+    }
+
+    /**
+     * 最终解决办法
+     */
+    @PostMapping("{uri}/**")
+    public Object post4(@PathVariable String uri, @RequestBody Map<String,String> body){
+        ResponseEntity<String> forEntity = new ResponseEntity(HttpStatus.OK);
+        return JSONObject.parseObject(forEntity.getBody());
     }
 }
