@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="124.223.29.146" remoteFilesAllowedToDisappearOnAutoupload="false" confirmBeforeUploading="false">
+    <option name="confirmBeforeUploading" value="false" />
+    <serverData>
+      <paths name="124.223.29.146">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/ldd/demo" local="$PROJECT_DIR$/target" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="192.168.1.107">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/ldd/demo" local="$PROJECT_DIR$/target" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
