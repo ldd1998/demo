@@ -17,13 +17,13 @@ public class RedisTestServiceSpeedTest {
     RedisSpeedTestService redisSpeedTestService;
 
     /**
-     * 测试redis的插入速度
-     * 约50000/s
+     * 测试redis的插入速度，100个线程每个10000数据，10W/s
+     * 但是当前机器和redis所在机器资源占用并不是很多，会不会是因为redis单线程的原因
      * 感觉也不是很快的样子
      */
     @Test
     public void test01(){
-        redisSpeedTestService.redisInsert(10000,1);
+        redisSpeedTestService.redisInsert(10000,100);
     }
 
     /**
