@@ -19,7 +19,7 @@ public class RedisTestServiceSpeedTest {
     /**
      * 测试redis的插入速度，100个线程每个10000数据，10W/s
      * 但是当前机器和redis所在机器资源占用并不是很多，会不会是因为redis单线程的原因
-     * 感觉也不是很快的样子
+     * 网络达到了10M/s，可能是网络原因
      */
     @Test
     public void test01(){
@@ -27,13 +27,12 @@ public class RedisTestServiceSpeedTest {
     }
 
     /**
-     * 读取20W需要4秒
-     * 50000/s
-     * 感觉也不是很快
+     * 约10w/s
+     * 网络达到了10M/s，可能是网络原因
      */
 
     @Test
     public void redisGetForValue() {
-        redisSpeedTestService.redisGetForValue(10000,20);
+        redisSpeedTestService.redisGetForValue(10000,100);
     }
 }
