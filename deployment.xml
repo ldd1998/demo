@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="49.235.109.105" remoteFilesAllowedToDisappearOnAutoupload="false" confirmBeforeUploading="false">
+  <component name="PublishConfigData" serverName="124.223.29.146" remoteFilesAllowedToDisappearOnAutoupload="false" confirmBeforeUploading="false">
     <option name="confirmBeforeUploading" value="false" />
     <serverData>
       <paths name="124.223.29.146">
         <serverdata>
           <mappings>
-            <mapping deploy="/home/ldd/demo" local="$PROJECT_DIR$/target" web="/" />
+            <mapping deploy="/home/ldd/demo/redis" local="$PROJECT_DIR$/redis/target" web="/" />
           </mappings>
         </serverdata>
       </paths>
@@ -14,13 +14,6 @@
         <serverdata>
           <mappings>
             <mapping deploy="/home/ldd/demo" local="$PROJECT_DIR$/target" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
-      <paths name="49.235.109.105">
-        <serverdata>
-          <mappings>
-            <mapping deploy="/home/ldd/demo" local="$PROJECT_DIR$/redis/target" web="/" />
           </mappings>
         </serverdata>
       </paths>
