@@ -1,17 +1,11 @@
 package org.example.interview;
 
-import io.swagger.models.auth.In;
-import org.checkerframework.checker.units.qual.A;
-import org.checkerframework.checker.units.qual.C;
-import org.checkerframework.checker.units.qual.K;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.client.RestTemplate;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.*;
-import java.util.stream.Collectors;
 
 public class LocalCacheAndConcurrent {
     // 使用多线程进行异步调用
@@ -27,20 +21,29 @@ public class LocalCacheAndConcurrent {
          * 已提供方法1、入参不大于10个
          */
         public Map<Integer,String> getShopName(List<Integer> shopIds){
-            return Collections.emptyMap();
+            Map map = new HashMap();
+            for (int i = 0; i < shopIds.size(); i++) {
+                map.put(shopIds.get(i),"name"+shopIds.get(i));
+            }
+            return map;
         }
 
         /**
          * 已提供方法2、入参不大于10个
          */
         public Map<Integer,String > getShopAddress(List<Integer> shopIds){
-            return Collections.emptyMap();
+            Map map = new HashMap();
+            for (int i = 0; i < shopIds.size(); i++) {
+                map.put(shopIds.get(i),"address"+shopIds.get(i));
+            }
+            return map;
         }
     }
 
     public class AServer{
         private ShopService shopService = new ShopService();
-
+        // 缓存，这里使用的map做简化版的本地缓存，也可以使用Guava Cache替代，可以设置失效时间
+        Map<Integer,ShopInfo> cache = new ConcurrentHashMap<>();
         /**
          *  根据商户id批量查询商户信息，入参shopIds不大于100个
          *  要求：
@@ -60,9 +63,6 @@ public class LocalCacheAndConcurrent {
             // 最后返回结果集，保证多线程并发安全
             Map<Integer,ShopInfo> resultMap = new ConcurrentHashMap<>();
 
-            // 缓存，这里使用的map做简化版的本地缓存，也可以使用Guava Cache替代，可以设置失效时间
-            Map<Integer,ShopInfo> cache = new ConcurrentHashMap<>();
-
             // 对需要查询的id进行遍历，缓存中有的就从缓存中取并移除id
             Iterator<Integer> iterator = shopIds.iterator();
             while (iterator.hasNext()) {
@@ -71,6 +71,7 @@ public class LocalCacheAndConcurrent {
                 if (cache.containsKey(id)) {
                     iterator.remove();
                     resultMap.put(id,cache.get(id));
+                    System.out.println("缓存中获取到元素"+id);
                 }
             }
 
@@ -80,9 +81,8 @@ public class LocalCacheAndConcurrent {
                 shopIdLists.add(shopIds.subList(i, Math.min(i + 10, shopIds.size())));
             }
 
-
+            // 对shopIdLists进行多线程并发获取数据
             CountDownLatch countDownLatch = new CountDownLatch(shopIdLists.size());
-
             for (int i = 0; i < shopIdLists.size(); i++) {
                 int k = i;
                 threadPoolExecutor.execute(new Runnable() {
@@ -108,61 +108,99 @@ public class LocalCacheAndConcurrent {
             countDownLatch.await();
             return resultMap;
         }
-
-        public<K,V> V get(K key) {
-            return null;
-        }
     }
 
-    // 使用redis做基础缓存
-    public class Cache<K,V>{
-        private RedisTemplate<K, V> redisTemplate;
-        AServer aServer = new AServer();
-        public V get(K key){
-            V value = redisTemplate.opsForValue().get(key);
-            // 该键已过期，返回上次结果
-            if(value == null){
-                return getLastValue(key);
+    /**
+     * 计算商品的优惠标签
+     * @param originalPrice 原价
+     * @param finalPrice 到手价
+     * @param historicalPriceList 历史到手价
+     * @return 优惠标签
+     */
+    public static String computeProductPromoTag(BigDecimal originalPrice, BigDecimal finalPrice, List<BigDecimal> historicalPriceList){
+        // 如果是历史最低，则输出“历史最低”
+        // 如果是近三个月最低则输出“近三个月最低”
+        // 如果有折扣，则输出“xx折扣”，保留一位小数，如果最后一位是0则不显示
+        // 兜底输出“到手价”
+
+        if (historicalPriceList.isEmpty()) {
+            return "到手价";
+        }
+
+        BigDecimal minHistoricalPrice = historicalPriceList.get(0);
+        BigDecimal minLastThreeMonthsPrice = historicalPriceList.get(historicalPriceList.size() - 1);
+        boolean hasDiscount = false;
+
+        for (int i = historicalPriceList.size() - 1; i >= 0; i--) {
+            BigDecimal price = historicalPriceList.get(i);
+            if (price.compareTo(minHistoricalPrice) < 0) {
+                minHistoricalPrice = price;
             }
-            // 读后异步更新
-            asyncUpdate(key);
-            return value;
-        }
 
-        private V getLastValue(K key) {
-            V value = redisTemplate.opsForValue().get("lastKey:"+key);
-            asyncUpdate(key);
-            return value;
+            if (price.compareTo(minLastThreeMonthsPrice) < 0 && historicalPriceList.size() - i < 120) {
+                minLastThreeMonthsPrice = price;
+            }
         }
-
-        public void asyncUpdate(K key){
-            threadPoolExecutor.execute(new Runnable() {
-                @Override
-                public void run() {
-                    // 异步读后更新，和过期后更新
-                    V getValue = aServer.get(key);
-                    redisTemplate.opsForValue().set(key,getValue);
-                    // 更新上次值
-                    redisTemplate.opsForValue().set((K) ("lastKey:"+key),getValue);
-                }
-            });
-
+        if(finalPrice.compareTo(minHistoricalPrice) < 0){
+            return "历史最低价";
         }
-        public V update(K key,V value){
-            redisTemplate.opsForValue().set(key,value);;
-            return value;
+        if(finalPrice.compareTo(minLastThreeMonthsPrice) < 0 ){
+            return "近三个月最低";
         }
+        if(finalPrice.compareTo(originalPrice) < 0){
+            BigDecimal discount = originalPrice.subtract(finalPrice).divide(originalPrice, 1, BigDecimal.ROUND_DOWN).multiply(new BigDecimal(10));
+            String discountTag = discount.toString();
+            if (discountTag.endsWith(".0")) {
+                discountTag = discountTag.replace(".0", "");
+            }
+            return discountTag + "折";
+        }
+        return "到手价";
     }
     public static void main(String[] args) {
-        AServer aServer = new LocalCacheAndConcurrent().new AServer();
+//        // 测试用的价格列表
+//        List<BigDecimal> historicalPriceList = new ArrayList<>();
+//        historicalPriceList.add(new BigDecimal("30.0"));
+//        historicalPriceList.add(new BigDecimal("40.0"));
+//        // 补充近三月数据
+//        for (int i = 0; i < 120; i++) {
+//            historicalPriceList.add(new BigDecimal("45.0"));
+//        }
+//        historicalPriceList.add(new BigDecimal("50.0"));
+//
+//        // 测试用例1: 历史最低价
+//        BigDecimal originalPrice1 = new BigDecimal("100.0");
+//        BigDecimal finalPrice1 = new BigDecimal("20.0");
+//        System.out.println(computeProductPromoTag(originalPrice1, finalPrice1, historicalPriceList));
+//
+//        // 测试用例2: 近三个月最低价
+//        BigDecimal originalPrice2 = new BigDecimal("100.0");
+//        BigDecimal finalPrice2 = new BigDecimal("43.0");
+//        System.out.println(computeProductPromoTag(originalPrice2, finalPrice2, historicalPriceList));
+//
+//        // 测试用例3: 折扣
+//        BigDecimal originalPrice3 = new BigDecimal("100.0");
+//        BigDecimal finalPrice3 = new BigDecimal("50.0");
+//        System.out.println(computeProductPromoTag(originalPrice3, finalPrice3, historicalPriceList));
+//
+//        // 测试用例4: 到手价
+//        BigDecimal originalPrice4 = new BigDecimal("100.0");
+//        BigDecimal finalPrice4 = new BigDecimal("100.0");
+//        System.out.println(computeProductPromoTag(originalPrice4, finalPrice4, historicalPriceList));
+//
 
+        AServer aServer = new LocalCacheAndConcurrent().new AServer();
         List<Integer> shopIds = new ArrayList<>();
         for (int i = 1; i <= 11; i++) {
             shopIds.add(i);
         }
-
         try {
             Map<Integer, ShopInfo> shopInfoMap = aServer.getShopInfo(shopIds);
+            for (Integer key : shopInfoMap.keySet()) {
+                System.out.println("正常获取结果："+shopInfoMap.get(key).name+"，"+shopInfoMap.get(key).name);
+            }
+            // 再次调用测试缓存中是否能正常获取
+            Map<Integer, ShopInfo> shopInfoMap2 = aServer.getShopInfo(shopIds);
         } catch (Exception e) {
             e.printStackTrace();
         }
