@@ -10,12 +10,12 @@
     <!--自定义属性，日志文件最大大小-->
     <property name="MAX_FILE_SIZE" value="200MB"/>
     <!-- 日志输出格式-->
-    <property name="PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %-40logger{40} : %msg%n"/>
+    <property name="PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %-40logger{40} : %msg%n"/>
     <!-- 输出info到控制台 -->
     <appender name="stdoutInfo" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
             <pattern>
-                %blue(%d{yyyy-MM-dd HH:mm:ss.SSS}) %green(%-5level) %cyan(%-40logger{40} :) %msg%n
+                %blue(%d{yyyy-MM-dd HH:mm:ss.SSS}) [%thread] %green(%-5level) %cyan(%-40logger{40} :) %msg%n
             </pattern>
         </layout>
         <!-- 配置过滤器，排除org.example.service.task.log.LogOutOneTask类的日志 -->
@@ -40,7 +40,7 @@
     <appender name="stdoutWarning" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
             <pattern>
-                %blue(%d{yyyy-MM-dd HH:mm:ss.SSS}) %yellow(%-5level) %cyan(%-40logger{40} :) %msg%n
+                %blue(%d{yyyy-MM-dd HH:mm:ss.SSS}) [%thread] %yellow(%-5level) %cyan(%-40logger{40} :) %msg%n
             </pattern>
         </layout>
         <!-- 此日志文件只记录info级别的 -->
@@ -54,7 +54,7 @@
     <appender name="stdoutError" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
             <pattern>
-                %blue(%d{yyyy-MM-dd HH:mm:ss.SSS}) %red(%-5level) %cyan(%-40logger{40} :) %msg%n
+                %blue(%d{yyyy-MM-dd HH:mm:ss.SSS}) [%thread] %red(%-5level) %cyan(%-40logger{40} :) %msg%n
             </pattern>
         </layout>
         <!-- 此日志文件只记录info级别的 -->
