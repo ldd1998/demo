@@ -14,20 +14,20 @@ import org.springframework.stereotype.Component;
 @Component
 @EnableAsync
 @EnableScheduling
-public class Async1 {
+public class Async2 {
 //    @Scheduled(cron = "0/1 * * * * ? ")
     @Async
     public void test1() throws InterruptedException {
-        log.info("test1执行开始");
+        log.info("test3执行开始");
         Thread.sleep(10000);
-        log.info("test1执行结束");
+        log.info("test3执行结束");
     }
 
 //    @Scheduled(cron = "0/1 * * * * ? ")
     @Async
     public void test2() throws InterruptedException {
-        log.info("test2执行开始");
+        log.info("test4执行开始");
         Thread.sleep(10000);
-        log.info("test2执行结束");
+        log.info("test4执行结束");
     }
 }
