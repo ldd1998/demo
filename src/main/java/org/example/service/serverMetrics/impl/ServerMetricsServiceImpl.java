@@ -1,4 +1,4 @@
-package org.example.service.impl;
+package org.example.service.serverMetrics.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.example.entity.ServerMetrics;

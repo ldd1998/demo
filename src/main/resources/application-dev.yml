@@ -79,3 +79,10 @@ xxl:
       port: 9999
       logpath:
       logretentiondays: 30
+hbase:
+  config:
+    hbase:
+      zookeeper:
+        quorum: 192.168.1.107
+        property:
+          clientPort: 2181
