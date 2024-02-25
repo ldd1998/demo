@@ -20,7 +20,7 @@ public class KafkaConsumerService {
     /**
      * 消费kafka消息，放到elastic
      */
-    @KafkaListener(topics = "serverMetricsTopic", groupId = "myGroup")
+//    @KafkaListener(topics = "serverMetricsTopic", groupId = "myGroup")
     public void monitorToEsConsumer(ConsumerRecord<String, String> record) {
         log.info("@KafkaListener接收: " + record.value());
     }
