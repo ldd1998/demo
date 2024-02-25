@@ -6,21 +6,14 @@
       <paths name="124.223.29.146">
         <serverdata>
           <mappings>
-            <mapping deploy="/home/ldd/demo" local="$PROJECT_DIR$/target" web="/" />
+            <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
       <paths name="192.168.1.107">
         <serverdata>
           <mappings>
-            <mapping deploy="/home/ldd/demo" local="$PROJECT_DIR$/target" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
-      <paths name="49.235.109.105">
-        <serverdata>
-          <mappings>
-            <mapping deploy="/home/ldd/demo" local="$PROJECT_DIR$/redis/target" web="/" />
+            <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
