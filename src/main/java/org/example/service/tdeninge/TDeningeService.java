@@ -18,7 +18,7 @@ import java.util.List;
  * @author ldd
  * TDeninge restful连接测试
  */
-@Service
+//@Service // 暂时关闭tdeninge
 @DS("td")
 @Slf4j
 public class TDeningeService {
