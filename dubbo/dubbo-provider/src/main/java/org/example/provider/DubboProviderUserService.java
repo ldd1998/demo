@@ -7,6 +7,6 @@ import org.example.service.DubboUserService;
 public class DubboProviderUserService implements DubboUserService {
     @Override
     public String getUser(String userId) {
-        return "user1";
+        return userId;
     }
 }

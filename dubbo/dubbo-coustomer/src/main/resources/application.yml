@@ -1,0 +1,9 @@
+server:
+  port: 8182
+spring:
+  application:
+    name: customer
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.1.107:8848
