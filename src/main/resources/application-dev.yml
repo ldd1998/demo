@@ -86,3 +86,8 @@ hbase:
         quorum: 192.168.1.107
         property:
           clientPort: 2181
+dubbo:
+  application:
+    name: dobbo-provider-consumer
+  registry:
+    address: zookeeper://192.168.1.107:2181

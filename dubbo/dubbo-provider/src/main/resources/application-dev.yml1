@@ -1,0 +1,10 @@
+server:
+  port: 8182
+spring:
+  application:
+    name: dubbo
+dubbo:
+  application:
+    name: dubbo
+  registry:
+    address: zookeeper://192.168.1.107:2181
